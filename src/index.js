@@ -11,6 +11,7 @@ import { ApolloClient, gql } from 'apollo-boost';
 
 import './index.css';
 import App from './App';
+import { resolvers, typeDefs } from './graphql/resolvers';
 
 const httpLink = createHttpLink({
   uri: 'https://crwn-clothing.com',
@@ -21,6 +22,15 @@ const cache = new InMemoryCache();
 const client = new ApolloClient({
   link: httpLink,
   cache,
+  typeDefs,
+  resolvers,
+});
+
+client.writeData({
+  data: {
+    cartHidden: true,
+    cartItems: [],
+  },
 });
 
 ReactDOM.render(
